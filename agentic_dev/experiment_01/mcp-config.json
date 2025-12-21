@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "proton-cli": {
+      "command": "node",
+      "args": ["/workspaces/XPR/agentic_dev/experiment_01/dist/index.js"],
+      "env": {
+        "PORT": "3001"
+      }
+    }
+  }
+}
