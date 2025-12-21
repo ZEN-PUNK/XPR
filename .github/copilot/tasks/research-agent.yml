@@ -1,0 +1,76 @@
+name: Deepen Blockchain Analytics Research
+description: >
+  An autonomous research agent that incrementally deepens,
+  formalizes, and validates the real-time blockchain analytics pipeline
+  research. All outputs must be additive and written exclusively to
+  the /research directory.
+
+inputs:
+  research_source:
+    description: >
+      The primary research manuscript or markdown file to analyze.
+    required: true
+
+rules:
+  - Do NOT modify existing files outside /research
+  - Do NOT rewrite the original manuscript
+  - All outputs must be new markdown files
+  - Prefer formal reasoning, models, and citations
+  - Explicitly state assumptions and limitations
+  - Use academic, systems-research tone
+
+outputs:
+  directory: research
+  format: markdown
+
+steps:
+  - id: context
+    name: Establish Research Context
+    action: >
+      Extract the core problem statement, assumptions,
+      scope boundaries, and success criteria from the source text.
+      Write outputs to research/00_context/.
+
+  - id: literature
+    name: Deep Literature Structuring
+    action: >
+      Build a related-work comparison matrix, identify
+      gaps vs prior art, and formalize novelty claims.
+      Write outputs to research/01_literature/.
+
+  - id: theory
+    name: Formal Theoretical Modeling
+    action: >
+      Translate system behavior into queueing-theoretic,
+      control-theoretic, or distributed-systems models.
+      Formalize hypotheses and expected bounds.
+      Write outputs to research/02_theory/.
+
+  - id: architecture
+    name: Agentic Architecture Expansion
+    action: >
+      Recast the pipeline as an agentic system:
+      ingestion agents, buffering agents, control loops,
+      feedback signals, and failure-handling agents.
+      Write outputs to research/03_architecture/.
+
+  - id: experiments
+    name: Experimental Rigor Enhancement
+    action: >
+      Propose additional experiments, statistical tests,
+      stress scenarios, and threats to validity.
+      Write outputs to research/04_experiments/.
+
+  - id: results
+    name: Deeper Result Interpretation
+    action: >
+      Analyze tail latency, utilization regimes,
+      cost-performance tradeoffs, and phase transitions.
+      Write outputs to research/05_results/.
+
+  - id: extensions
+    name: Future Agentic Extensions
+    action: >
+      Design extensions involving autonomous scaling,
+      multi-chain ingestion, and ML-driven control.
+      Write outputs to research/06_extensions/.
