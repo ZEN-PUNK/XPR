@@ -1,0 +1,25 @@
+{
+  "name": "xpr-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for XPR Network CLI with Azure Functions support",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "xpr",
+    "proton",
+    "blockchain",
+    "azure-functions"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/functions": "^4.10.0",
+    "@modelcontextprotocol/sdk": "^1.24.0",
+    "node-fetch": "^2.7.0"
+  }
+}
