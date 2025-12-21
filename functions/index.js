@@ -38,7 +38,7 @@ app.http('getAccount', {
       
       if (request.method === 'GET') {
         accountName = request.query.get('account_name');
-      } else {
+      } else if (request.method === 'POST') {
         const body = await request.json();
         accountName = body.account_name;
       }
@@ -79,7 +79,7 @@ app.http('getBalance', {
         account = request.query.get('account');
         code = request.query.get('code') || 'eosio.token';
         symbol = request.query.get('symbol') || 'XPR';
-      } else {
+      } else if (request.method === 'POST') {
         const body = await request.json();
         account = body.account;
         code = body.code || 'eosio.token';
@@ -120,7 +120,7 @@ app.http('getBlock', {
       
       if (request.method === 'GET') {
         blockNumOrId = request.query.get('block_num_or_id');
-      } else {
+      } else if (request.method === 'POST') {
         const body = await request.json();
         blockNumOrId = body.block_num_or_id;
       }
@@ -159,7 +159,7 @@ app.http('getTransaction', {
       
       if (request.method === 'GET') {
         transactionId = request.query.get('transaction_id');
-      } else {
+      } else if (request.method === 'POST') {
         const body = await request.json();
         transactionId = body.transaction_id;
       }
@@ -237,7 +237,7 @@ app.http('getActions', {
         accountName = request.query.get('account_name');
         pos = parseInt(request.query.get('pos') || '-1');
         offset = parseInt(request.query.get('offset') || '-20');
-      } else {
+      } else if (request.method === 'POST') {
         const body = await request.json();
         accountName = body.account_name;
         pos = body.pos || -1;
@@ -278,7 +278,7 @@ app.http('getAbi', {
       
       if (request.method === 'GET') {
         accountName = request.query.get('account_name');
-      } else {
+      } else if (request.method === 'POST') {
         const body = await request.json();
         accountName = body.account_name;
       }
@@ -317,7 +317,7 @@ app.http('getProducers', {
 
       if (request.method === 'GET') {
         limit = parseInt(request.query.get('limit') || '50');
-      } else {
+      } else if (request.method === 'POST') {
         const body = await request.json();
         limit = body.limit || 50;
       }
