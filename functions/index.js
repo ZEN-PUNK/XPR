@@ -34,9 +34,14 @@ app.http('getAccount', {
   authLevel: 'anonymous',
   handler: async (request, context) => {
     try {
-      const accountName =
-        request.query.get('account_name') ||
-        (await request.json()).account_name;
+      let accountName;
+      
+      if (request.method === 'GET') {
+        accountName = request.query.get('account_name');
+      } else {
+        const body = await request.json();
+        accountName = body.account_name;
+      }
 
       if (!accountName) {
         return {
@@ -111,9 +116,14 @@ app.http('getBlock', {
   authLevel: 'anonymous',
   handler: async (request, context) => {
     try {
-      const blockNumOrId =
-        request.query.get('block_num_or_id') ||
-        (await request.json()).block_num_or_id;
+      let blockNumOrId;
+      
+      if (request.method === 'GET') {
+        blockNumOrId = request.query.get('block_num_or_id');
+      } else {
+        const body = await request.json();
+        blockNumOrId = body.block_num_or_id;
+      }
 
       if (!blockNumOrId) {
         return {
@@ -145,9 +155,14 @@ app.http('getTransaction', {
   authLevel: 'anonymous',
   handler: async (request, context) => {
     try {
-      const transactionId =
-        request.query.get('transaction_id') ||
-        (await request.json()).transaction_id;
+      let transactionId;
+      
+      if (request.method === 'GET') {
+        transactionId = request.query.get('transaction_id');
+      } else {
+        const body = await request.json();
+        transactionId = body.transaction_id;
+      }
 
       if (!transactionId) {
         return {
@@ -259,9 +274,14 @@ app.http('getAbi', {
   authLevel: 'anonymous',
   handler: async (request, context) => {
     try {
-      const accountName =
-        request.query.get('account_name') ||
-        (await request.json()).account_name;
+      let accountName;
+      
+      if (request.method === 'GET') {
+        accountName = request.query.get('account_name');
+      } else {
+        const body = await request.json();
+        accountName = body.account_name;
+      }
 
       if (!accountName) {
         return {

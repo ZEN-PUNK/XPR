@@ -22,7 +22,7 @@ export class XPRClient {
     });
 
     if (!response.ok) {
-      throw new Error(`XPR API error: ${response.statusText}`);
+      throw new Error(`XPR API error (${response.status} ${response.statusText}) at ${path}`);
     }
 
     return await response.json();
