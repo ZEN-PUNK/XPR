@@ -1,6 +1,23 @@
 # Azure Functions Deployment Guide
 
-This guide provides detailed instructions for deploying the XPR MCP Server to Azure Functions.
+This guide provides detailed instructions for **manual** deployment of the XPR MCP Server to Azure Functions.
+
+> **💡 Recommended**: For automated deployments, use our [CI/CD Pipeline](.github/CICD_SETUP.md) instead. The pipeline handles building, testing, and deploying automatically.
+
+## Deployment Options
+
+1. **[Automated CI/CD Pipeline](.github/CICD_SETUP.md)** ⭐ **Recommended**
+   - Automatic deployments on push to main
+   - Build and test validation
+   - Production and staging environments
+   - Setup time: ~5 minutes
+
+2. **Manual Deployment** (This Guide)
+   - Direct deployment using Azure CLI or Portal
+   - Good for one-time deploys or testing
+   - More control over the process
+
+---
 
 ## Prerequisites
 
