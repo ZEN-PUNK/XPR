@@ -216,5 +216,9 @@ RATE_LIMIT_MAX=100
 
 - [The Twelve-Factor App - Config](https://12factor.net/config)
 - [Azure App Service - Environment Variables](https://docs.microsoft.com/en-us/azure/app-service/configure-common)
-- [Node.js dotenv Library](https://github.com/motdotla/dotenv)
+- [Node.js dotenv Library](https://github.com/motdotla/dotenv) (optional for development)
 - [IMPROVEMENTS.md - Configuration Management](../IMPROVEMENTS.md#1-configuration-management-system)
+
+## Notes
+
+The implementation shown uses vanilla Node.js `process.env` without external libraries. For local development convenience, the `dotenv` package can optionally be used to load `.env` files, but it's not required for production deployment as Azure App Settings and environment variables are natively supported.

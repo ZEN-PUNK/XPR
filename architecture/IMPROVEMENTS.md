@@ -192,10 +192,10 @@ export function checkRateLimit(clientId, maxRequests = 100, windowMs = 60000) {
 - Add performance metrics
 - Request/response logging
 
-**Implementation**:
+**Implementation** (using proposed `pino` library for structured logging):
 ```javascript
 // utils/logger.js
-import pino from 'pino';
+import pino from 'pino'; // Proposed dependency: npm install pino
 
 export const logger = pino({
   level: process.env.LOG_LEVEL || 'info',
@@ -265,15 +265,15 @@ export function withLogging(handler) {
 - Potential for injection attacks
 
 **Proposed Solution**:
-- Schema validation library (Zod, Joi, or Yup)
+- Schema validation library (Zod, Joi, or Yup) - proposed new dependency
 - Validate all inputs against schemas
 - Proper error messages for invalid inputs
 - Sanitization of string inputs
 
-**Implementation**:
+**Implementation** (using proposed `zod` library):
 ```javascript
 // validators/schemas.js
-import { z } from 'zod';
+import { z } from 'zod'; // Proposed dependency: npm install zod
 
 export const accountSchema = z.object({
   account_name: z.string().min(1).max(13).regex(/^[a-z1-5.]+$/)
