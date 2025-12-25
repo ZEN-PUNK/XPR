@@ -2,11 +2,16 @@
 
 An MCP (Model Context Protocol) server for the XPR Network (Proton blockchain) CLI with Azure Functions support.
 
+> **📖 New to this repository?** See [QUICK_REFERENCE.md](./QUICK_REFERENCE.md) for a complete navigation guide.
+> 
+> **🧪 Want to create experiments?** See [AGENTIC_DEVELOPMENT.md](./AGENTIC_DEVELOPMENT.md) for development practices.
+
 ## Features
 
 - **MCP Server**: Standalone server that exposes XPR Network functionality through the Model Context Protocol
 - **Azure Functions**: REST API endpoints for deploying to Azure Functions
 - **Comprehensive Tools**: Access to blockchain data including accounts, balances, transactions, blocks, and more
+- **Agentic Development**: Self-contained experiments following reproducible patterns
 
 ## Available Tools/Endpoints
 
@@ -225,7 +230,33 @@ ISC
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or pull requests.
+Contributions are welcome! Please follow these guidelines:
+
+1. **For bug fixes or features**: Submit a pull request to the main branch
+2. **For new experiments**: Use the experiment template and follow agentic practices
+   - Run: `./.agentic/scripts/create-experiment.sh`
+   - See: [AGENTIC_DEVELOPMENT.md](./AGENTIC_DEVELOPMENT.md)
+3. **For documentation**: Update relevant docs and keep them in sync
+
+See [AGENTIC_DEVELOPMENT.md](./AGENTIC_DEVELOPMENT.md) for detailed development practices.
+
+## Documentation
+
+### Quick Navigation
+- **[QUICK_REFERENCE.md](./QUICK_REFERENCE.md)** - One-page navigation guide ⭐
+- **[AGENTIC_DEVELOPMENT.md](./AGENTIC_DEVELOPMENT.md)** - Development practices and patterns
+- **[EXPERIMENTS.md](./EXPERIMENTS.md)** - Experiment catalog and templates
+- **[SETUP.md](./SETUP.md)** - Complete environment setup guide
+
+### Deployment & Configuration
+- **[AZURE_DEPLOYMENT.md](./AZURE_DEPLOYMENT.md)** - Deploy to Azure Functions
+- **[MCP_CLIENT_CONFIG.md](./MCP_CLIENT_CONFIG.md)** - Configure MCP clients
+
+### Experiments
+- **[experiment_01](./agentic_dev/experiment_01/)** - Proton CLI MCP Server
+
+### Research
+- **[research/](./research/)** - Research artifacts and theory
 
 ## Resources
 

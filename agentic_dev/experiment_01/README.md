@@ -185,3 +185,26 @@ All errors follow JSON-RPC error format:
 - Run end-to-end tests after each iteration
 - Integrate with VS Code Copilot (Phase 4)
 
+## Related Documentation
+
+### In This Repository
+- [Main Repository README](../../README.md) - Project overview
+- [Agentic Development Guide](../../AGENTIC_DEVELOPMENT.md) - Development practices
+- [Experiments Catalog](../../EXPERIMENTS.md) - All experiments and templates
+- [Setup Guide](../../SETUP.md) - Environment setup
+
+### In This Experiment
+- [INDEX.md](./INDEX.md) - Quick navigation and structure
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Design decisions
+- [EXPERIMENT_SCOPE.md](./EXPERIMENT_SCOPE.md) - Boundaries and scope
+- [AGENTIC_DEVELOPMENT_GUIDE.md](./AGENTIC_DEVELOPMENT_GUIDE.md) - Agent patterns
+
+### External Resources
+- [Model Context Protocol](https://modelcontextprotocol.io/)
+- [XPR Network](https://www.protonchain.com/)
+- [Proton CLI](https://github.com/XPRNetwork/proton-cli)
+
+---
+
+**Note**: This experiment follows agentic development practices. See [AGENTIC_DEVELOPMENT.md](../../AGENTIC_DEVELOPMENT.md) for principles and patterns.
+
