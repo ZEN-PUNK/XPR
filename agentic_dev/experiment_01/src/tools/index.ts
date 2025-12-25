@@ -1,8 +1,9 @@
 import { accountTools } from './account-tools';
 import { chainTools } from './chain-tools';
-import createAzureTools from './azure-tools';
-import AzureAdapter from '../adapters/azure-adapter';
-import { loadAzureConfig, isAzureConfigured } from '../config/azure-config';
+// Azure tools disabled for now - SAMA integration focus
+// import createAzureTools from './azure-tools';
+// import AzureAdapter from '../adapters/azure-adapter';
+// import { loadAzureConfig, isAzureConfigured } from '../config/azure-config';
 
 /**
  * Global tool registry
@@ -10,17 +11,17 @@ import { loadAzureConfig, isAzureConfigured } from '../config/azure-config';
  */
 let allTools = [...accountTools, ...chainTools];
 
-// Initialize Azure tools if Azure credentials are configured
-if (isAzureConfigured()) {
-  try {
-    const azureConfig = loadAzureConfig();
-    const azureAdapter = new AzureAdapter(azureConfig);
-    const azureTools = createAzureTools(azureAdapter);
-    allTools = [...allTools, ...azureTools];
-  } catch (error) {
-    console.error('Failed to initialize Azure tools:', error);
-  }
-}
+// Azure tools disabled - will add SAMA lending tools instead
+// if (isAzureConfigured()) {
+//   try {
+//     const azureConfig = loadAzureConfig();
+//     const azureAdapter = new AzureAdapter(azureConfig);
+//     const azureTools = createAzureTools(azureAdapter);
+//     allTools = [...allTools, ...azureTools];
+//   } catch (error) {
+//     console.error('Failed to initialize Azure tools:', error);
+//   }
+// }
 
 /**
  * Get tool by name

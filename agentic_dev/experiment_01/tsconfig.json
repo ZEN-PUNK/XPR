@@ -16,5 +16,5 @@
     "moduleResolution": "node"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "src/tools/azure-tools.ts", "src/adapters/azure-adapter.ts", "src/config/azure-config.ts"]
 }
