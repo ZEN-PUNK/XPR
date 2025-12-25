@@ -381,7 +381,8 @@ This is expected! Experiments are independent. You may need to:
 ### External Resources
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 - [XPR Network](https://www.protonchain.com/)
-- [Agentic Development Patterns](https://martinfowler.com/articles/patterns-of-distributed-systems/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices)
 
 ## Contributing
 
