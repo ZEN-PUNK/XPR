@@ -196,6 +196,10 @@ ISC
 
 Contributions are welcome! Please feel free to submit issues or pull requests.
 
+## Architecture
+
+For detailed architecture documentation, improvements, and decision records, see the [Architecture Documentation](./architecture/).
+
 ## Resources
 
 - [XPR Network](https://www.protonchain.com/)
