@@ -30,8 +30,10 @@ MCP_CLIENT_CONFIG.md
 .env.*
 local.settings.json
 
-# Dependencies (will be installed during build)
-node_modules/
+# Dependencies 
+# Note: node_modules is NOT excluded here because Azure Functions deployment
+# includes production dependencies. The build pipeline runs 'npm prune --production'
+# to remove dev dependencies before packaging.
 
 # Temporary and cache files
 tmp/
