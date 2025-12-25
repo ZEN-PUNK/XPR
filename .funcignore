@@ -1,0 +1,52 @@
+# Azure Functions Ignore File
+# Files and directories to exclude from deployment
+
+# Development files
+.git*
+.vscode/
+.idea/
+*.md
+!README.md
+!AZURE_DEPLOYMENT.md
+
+# Build and test files
+test-structure.js
+*.test.js
+*.spec.js
+coverage/
+
+# Research and documentation
+research/
+agentic_dev/
+agent.md
+SUMMARY.md
+MCP_CLIENT_CONFIG.md
+
+# CI/CD
+.github/
+
+# Environment and local settings
+.env
+.env.*
+local.settings.json
+
+# Dependencies (will be installed during build)
+node_modules/
+
+# Temporary and cache files
+tmp/
+temp/
+*.tmp
+.cache/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Azure specific
+.azure/
+bin/
+obj/
