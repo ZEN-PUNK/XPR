@@ -160,15 +160,39 @@ curl -X POST http://localhost:7071/api/getTableRows \
 
 ```
 .
-├── src/
-│   ├── index.js          # MCP Server implementation
-│   └── xpr-client.js     # XPR Network API client
-├── functions/
-│   └── index.js          # Azure Functions handlers
-├── host.json             # Azure Functions configuration
-├── package.json          # Project dependencies
-└── README.md            # This file
+├── src/                      # Main MCP Server implementation
+│   ├── index.js              # MCP Server entry point
+│   └── xpr-client.js         # XPR Network API client
+├── functions/                # Azure Functions handlers
+│   └── index.js
+├── agentic_dev/             # Self-contained experiments
+│   └── experiment_01/        # Proton CLI MCP server
+├── research/                 # Research artifacts and theory
+├── .agentic/                # Agentic development resources
+│   └── templates/            # Templates for new experiments
+├── AGENTIC_DEVELOPMENT.md   # Development practices guide
+├── EXPERIMENTS.md            # Experiments catalog
+├── SETUP.md                 # Environment setup guide
+├── host.json                # Azure Functions configuration
+├── package.json             # Project dependencies
+└── README.md               # This file
 ```
+
+### Agentic Development
+
+This repository follows **agentic development practices** to enable deterministic and reproducible experiments:
+
+- **📖 [AGENTIC_DEVELOPMENT.md](./AGENTIC_DEVELOPMENT.md)** - Core principles and patterns
+- **📋 [EXPERIMENTS.md](./EXPERIMENTS.md)** - Catalog of all experiments with templates
+- **⚙️ [SETUP.md](./SETUP.md)** - Complete environment setup guide
+
+Each experiment in `agentic_dev/` is **self-contained** with:
+- Its own `package.json` with all dependencies
+- Complete documentation (README, ARCHITECTURE, SCOPE)
+- Independent build and run capabilities
+- Comprehensive task logs and learnings
+
+**Learn more**: Start with [AGENTIC_DEVELOPMENT.md](./AGENTIC_DEVELOPMENT.md) to understand the development workflow.
 
 ### Testing
 
@@ -176,6 +200,13 @@ Test the XPR client functionality:
 
 ```bash
 node -e "import('./src/xpr-client.js').then(m => new m.XPRClient().getInfo().then(console.log))"
+```
+
+Test an experiment:
+
+```bash
+cd agentic_dev/experiment_01
+npm install && npm run build && npm start
 ```
 
 ## Dependencies
