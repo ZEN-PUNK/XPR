@@ -69,14 +69,38 @@ XPR/
 
 ## Creating a New Experiment
 
-### Step 1: Use the Template
+### Step 1: Use the Creation Script (Recommended)
+
+The easiest way to create a new experiment is using the automated script:
 
 ```bash
-# Copy the experiment template
+# Run the creation script
+./.agentic/scripts/create-experiment.sh
+
+# Follow the interactive prompts:
+# 1. Confirm or specify experiment number
+# 2. Enter experiment name (e.g., 'caching-layer')
+# 3. Enter brief description
+```
+
+The script will:
+- ✅ Create experiment directory from template
+- ✅ Update all files with experiment number and metadata
+- ✅ Initialize package.json with your details
+- ✅ Set correct dates in documentation
+- ✅ Initialize git tracking
+- ✅ Provide next steps guidance
+
+**Alternative (Manual):**
+
+```bash
+# Copy the experiment template manually
 cp -r .agentic/templates/experiment_template agentic_dev/experiment_XX
 
 # Navigate to your new experiment
 cd agentic_dev/experiment_XX
+
+# Manually update files with experiment number and details
 ```
 
 ### Step 2: Initialize the Experiment
@@ -110,10 +134,24 @@ Follow the iteration pattern:
 ### Step 5: Complete & Summarize
 
 When done:
-1. Run all validation scripts
-2. Create completion summary
-3. Document learnings for next iteration
-4. Update experiment catalog in `EXPERIMENTS.md`
+1. Run validation script: `./.agentic/scripts/validate-experiment.sh`
+2. Fix any errors or warnings
+3. Run all tests to ensure everything works
+4. Create completion summary in your task.md
+5. Document learnings for next iteration
+6. Update experiment catalog in `EXPERIMENTS.md`
+
+**Validation checklist:**
+```bash
+# Navigate to your experiment
+cd agentic_dev/experiment_XX
+
+# Run automated validation
+../../.agentic/scripts/validate-experiment.sh
+
+# Should output:
+# 🎉 EXCELLENT! All checks passed!
+```
 
 ## Experiment Requirements Checklist
 
@@ -210,8 +248,11 @@ git commit -m "descriptive message"
 Before marking an experiment complete:
 
 ```bash
-# Run all checks
-npm run validate  # If available
+# Run automated validation
+../../.agentic/scripts/validate-experiment.sh
+
+# Or if you have npm script:
+npm run validate
 
 # Verify build
 npm run build
@@ -219,9 +260,36 @@ npm run build
 # Test functionality
 npm test  # or manual testing
 
-# Check documentation
+# Check documentation completeness
 ls -la  # Ensure all required files exist
 ```
+
+## Helper Scripts
+
+The repository includes automated scripts to streamline agentic development:
+
+### Create New Experiment
+
+```bash
+./.agentic/scripts/create-experiment.sh
+```
+
+Creates a new experiment from template with proper initialization. See [scripts README](./.agentic/scripts/README.md) for details.
+
+### Validate Experiment
+
+```bash
+./.agentic/scripts/validate-experiment.sh [experiment-path]
+```
+
+Validates that an experiment meets all requirements. Checks:
+- Required files exist
+- Dependencies are properly configured
+- Build succeeds
+- Documentation is comprehensive
+- Experiment is independent (no parent imports)
+
+For complete documentation, see [`.agentic/scripts/README.md`](./.agentic/scripts/README.md).
 
 ## Common Patterns
 
