@@ -52,6 +52,7 @@ function handleToolsList(id: string | number): JsonRpcResponse {
 
 /**
  * Handle MCP tools/call request
+ * Returns content in MCP-compliant format with content array
  */
 async function handleToolCall(
   id: string | number,
@@ -73,10 +74,18 @@ async function handleToolCall(
   const result = await callTool(name, args || {});
 
   if (result.success) {
+    // MCP protocol requires content as array of content items
     return {
       jsonrpc: '2.0',
       id,
-      result: result.data,
+      result: {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(result.data, null, 2),
+          },
+        ],
+      },
     };
   } else {
     return {
