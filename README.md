@@ -2,10 +2,13 @@
 
 An MCP (Model Context Protocol) server for the XPR Network (Proton blockchain) CLI with Azure Functions support.
 
+[![Build and Release](https://github.com/ZEN-PUNK/XPR/actions/workflows/azure-functions-deploy.yml/badge.svg)](https://github.com/ZEN-PUNK/XPR/actions/workflows/azure-functions-deploy.yml)
+
 ## Features
 
 - **MCP Server**: Standalone server that exposes XPR Network functionality through the Model Context Protocol
 - **Azure Functions**: REST API endpoints for deploying to Azure Functions
+- **Automated CI/CD**: Build and release pipeline for seamless Azure deployments
 - **Comprehensive Tools**: Access to blockchain data including accounts, balances, transactions, blocks, and more
 
 ## Available Tools/Endpoints
@@ -69,6 +72,23 @@ When deployed, the following HTTP endpoints will be available:
 - `GET/POST /api/getProducers?limit=50` - Get producers
 
 #### Deploy to Azure
+
+**Automated Deployment (Recommended)**
+
+The project includes a complete CI/CD pipeline for automated builds and deployments.
+
+📖 **Quick Setup**: See [CI/CD Setup Guide](.github/CICD_SETUP.md) for step-by-step instructions (5 minutes)
+
+📚 **Full Documentation**: See [Pipeline Guide](PIPELINE_GUIDE.md) for complete details
+
+Features:
+- ✅ Automated builds on push to `main`
+- ✅ Separate production and staging environments
+- ✅ Artifact packaging and optimization
+- ✅ Secure authentication with Azure
+- ✅ Manual deployment option via GitHub Actions
+
+**Manual Deployment**
 
 1. Create an Azure Function App:
 ```bash
