@@ -186,8 +186,8 @@ Pre-deployment, testing, and documentation checklists prevent missing steps.
 
 **Version:** v1.1.0 (RPC Failover)  
 **Status:** Production Ready ✅  
-**Deployment:** https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp  
-**Resource Group:** rg-sama-mcp (East US 2)  
+**Deployment:** https://YOUR-FUNCTION-APP.azurewebsites.net/mcp  
+**Resource Group:** AZURE-RESOURCE-GROUP (East US 2)  
 **Last Updated:** December 25, 2024 16:30 UTC
 
 **Performance:**

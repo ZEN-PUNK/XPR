@@ -1,73 +1,44 @@
-# Experiment 03: XPR Blockchain MCP Server on Azure Functions
+# Experiment 02: XPR Blockchain MCP Server (Python SDK)
 
-**Production-Ready Proton Blockchain MCP Server with RPC Failover**
+**Early Python SDK Implementation for Proton Blockchain**
 
-[![Status](https://img.shields.io/badge/status-production-green)]()
+[![Status](https://img.shields.io/badge/status-archived-yellow)]()
 [![Azure](https://img.shields.io/badge/azure-functions-blue)]()
 [![Python](https://img.shields.io/badge/python-3.12-blue)]()
-[![MCP](https://img.shields.io/badge/MCP-FastMCP-purple)]()
+[![MCP](https://img.shields.io/badge/MCP-Python_SDK-purple)]()
 
 ---
 
-## 🚀 Quick Start
+## ⚠️ Migration Notice
 
-### Deployed Server
-```
-https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
-```
-
-### Test with MCP Tool
-```python
-# Get Proton blockchain account information
-mcp_mcp-sama_get_account("zenpunk")
-```
-
-### Expected Response
-```json
-{
-  "account_name": "zenpunk",
-  "created": "2025-11-09T03:14:47.000",
-  "ram_quota": 13399,
-  "ram_usage": 7367,
-  "permissions": [...],
-  "voter_info": {
-    "producers": ["eosusa", "protonnz", "protonuk", "xprcore"]
-  }
-}
-```
-
----
-
-## 📚 Documentation Map
-
-**Start Here:**
-1. **README.md** (this file) - Quick start and overview
-2. **[agent.md](./agent.md)** - Architecture vision and strategy (READ FIRST for context)
-
-**For Development:**
-3. **[ITERATION_GUIDE.md](./ITERATION_GUIDE.md)** - How to iterate on this project (NEW!)
-4. **[CHANGES.md](./CHANGES.md)** - Complete change history (update before/after changes)
-5. **[AGENT_PROMPT.md](./AGENT_PROMPT.md)** - Step-by-step implementation guide
-
-**For Deployment:**
-6. **[DEPLOYMENT_INFO.md](./DEPLOYMENT_INFO.md)** - Current deployment state and endpoints
-7. **[DEPLOYMENT_JOURNEY.md](./DEPLOYMENT_JOURNEY.md)** - Timeline of debugging and improvements
-
-**Read documents in this order for best understanding.**
+**This experiment (02) is archived.**  
+For the latest production implementation, see **[experiment_04](../experiment_04/)**.
 
 ---
 
 ## 🎯 What This Is
 
-A **production-ready MCP (Model Context Protocol) server** deployed to Azure Functions that provides blockchain data from the Proton blockchain via RPC API calls.
+An **early exploration** of hosting an MCP server for Proton blockchain using:
+- Official Python MCP SDK
+- Azure Functions as custom handler
+- Proton RPC API integration
 
-**Key Features:**
-- ✅ Direct RPC integration (no subprocess overhead)
-- ✅ Automatic failover across 4 RPC endpoints
-- ✅ ~200-300ms response time (warm)
-- ✅ Anonymous authentication (easy testing)
-- ✅ Production monitoring via Application Insights
-- ✅ Comprehensive documentation for iteration
+This experiment was a learning phase that led to the production implementation in experiment_04.
+
+---
+
+## 📚 Documentation Map
+
+**Navigation:**
+1. **README.md** (this file) - Overview
+2. **[mcp-server/README.md](./mcp-server/README.md)** - Server implementation details
+3. **[EXPERIMENT_02_CLEANUP_GUIDE.md](./EXPERIMENT_02_CLEANUP_GUIDE.md)** - Cleanup instructions for AI agents
+4. **[AGENTIC_GUIDE.md](./AGENTIC_GUIDE.md)** - Development patterns (if exists)
+
+**For Production Work:**
+- See **[../experiment_04/CURRENT_STATUS.md](../experiment_04/CURRENT_STATUS.md)** - Latest status
+- See **[../experiment_04/API_REFERENCE.md](../experiment_04/API_REFERENCE.md)** - Complete tool docs
+- See **[../experiment_04/SEQUENTIAL_TOOL_USAGE_GUIDE.md](../experiment_04/SEQUENTIAL_TOOL_USAGE_GUIDE.md)** - Usage patterns
 
 ---
 
@@ -77,6 +48,8 @@ A **production-ready MCP (Model Context Protocol) server** deployed to Azure Fun
 MCP Client (VS Code / API)
         ↓
 Azure Function App (Python 3.12)
+        ↓
+Python MCP SDK Server
         ↓
 FastMCP Framework (stateless HTTP)
         ↓
@@ -156,8 +129,8 @@ azd deploy --no-prompt
 ```bash
 # Check function app status
 az functionapp show \
-  --name func-mcp-hk6er2km4y6bi \
-  --resource-group rg-sama-mcp \
+  --name AZURE-FUNCTION-APP-NAME \
+  --resource-group AZURE-RESOURCE-GROUP \
   --query state
 
 # Expected: "Running"
@@ -272,12 +245,12 @@ See **[ITERATION_GUIDE.md](./ITERATION_GUIDE.md)** for the complete process.
 
 ## 🔗 Azure Resources
 
-**Resource Group:** rg-sama-mcp  
+**Resource Group:** AZURE-RESOURCE-GROUP  
 **Region:** East US 2  
 
 | Resource | Name |
 |----------|------|
-| Function App | func-mcp-hk6er2km4y6bi |
+| Function App | AZURE-FUNCTION-APP-NAME |
 | Storage | sthk6er2km4y6bi |
 | App Service Plan | plan-hk6er2km4y6bi |
 | Application Insights | appi-hk6er2km4y6bi |
@@ -285,7 +258,7 @@ See **[ITERATION_GUIDE.md](./ITERATION_GUIDE.md)** for the complete process.
 
 **Portal Link:**
 ```
-https://portal.azure.com/#@/resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/rg-sama-mcp/overview
+https://portal.azure.com/#@/resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/AZURE-RESOURCE-GROUP/overview
 ```
 
 ---

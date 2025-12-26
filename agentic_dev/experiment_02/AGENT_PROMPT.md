@@ -46,7 +46,7 @@ Build a minimal viable Azure Functions MCP server that exposes 3 Proton blockcha
 │   └── resources.bicep                 # Resource definitions
 └── azure.yaml                          # Azure Developer CLI config
 
-Deployed URL: https://func-mcp-7sfw4es6vsn7u.azurewebsites.net/mcp
+Deployed URL: https://YOUR-FUNCTION-APP.azurewebsites.net/mcp
 Local URL: http://localhost:7071/mcp
 ```
 

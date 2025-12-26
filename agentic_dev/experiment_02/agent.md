@@ -163,13 +163,13 @@ JSON Response
 ┌─────────────────────────────────────────────────────────────────┐
 │         VS Code / GitHub Copilot (MCP Client)                   │
 │  - Connects via HTTP/SSE                                        │
-│  - URL: https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp   │
+│  - URL: https://YOUR-FUNCTION-APP.azurewebsites.net/mcp   │
 └──────────────────────┬──────────────────────────────────────────┘
                        │ HTTPS + CORS
                        ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│      Azure Function App (func-mcp-hk6er2km4y6bi)               │
-│  Resource Group: rg-sama-mcp                                    │
+│      Azure Function App (AZURE-FUNCTION-APP-NAME)               │
+│  Resource Group: AZURE-RESOURCE-GROUP                                    │
 │  Location: East US 2                                            │
 │  Runtime: Python 3.12 (FlexConsumption)                        │
 │  - HTTP trigger                                                 │

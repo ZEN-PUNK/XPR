@@ -160,12 +160,12 @@
 - Created new Azure Developer CLI environment: `sama-mcp`
 - Set Azure location to `eastus2`
 - Enabled anonymous authentication: `ANONYMOUS_SERVER_AUTH=true`
-- Provisioned new Azure resources in resource group: `rg-sama-mcp`
+- Provisioned new Azure resources in resource group: `AZURE-RESOURCE-GROUP`
 - Deployed XPR MCP server with `get_account` tool
 
 **Azure Resources Created:**
-- **Resource Group:** `rg-sama-mcp` (East US 2)
-- **Function App:** `func-mcp-hk6er2km4y6bi`
+- **Resource Group:** `AZURE-RESOURCE-GROUP` (East US 2)
+- **Function App:** `AZURE-FUNCTION-APP-NAME`
 - **Storage Account:** `sthk6er2km4y6bi`
 - **App Service Plan:** `plan-hk6er2km4y6bi` (FlexConsumption SKU)
 - **Application Insights:** `appi-hk6er2km4y6bi`
@@ -174,9 +174,9 @@
 - **Private Endpoint:** `blob-private-endpoint`
 
 **Deployment URLs:**
-- **MCP Endpoint:** https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
-- **Function App:** https://func-mcp-hk6er2km4y6bi.azurewebsites.net/
-- **Azure Portal:** https://portal.azure.com/#resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/rg-sama-mcp
+- **MCP Endpoint:** https://YOUR-FUNCTION-APP.azurewebsites.net/mcp
+- **Function App:** https://YOUR-FUNCTION-APP.azurewebsites.net/
+- **Azure Portal:** https://portal.azure.com/#resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/AZURE-RESOURCE-GROUP
 
 **Deployment Commands Used:**
 ```bash
@@ -190,7 +190,7 @@ azd up --no-prompt
 **Deployment Time:** 5 minutes 2 seconds
 
 **Testing:**
-- [x] MCP endpoint responds: https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
+- [x] MCP endpoint responds: https://YOUR-FUNCTION-APP.azurewebsites.net/mcp
 - [x] Server returns MCP protocol responses
 - [x] Anonymous authentication enabled (no login required)
 
@@ -199,9 +199,9 @@ azd up --no-prompt
 ANONYMOUS_SERVER_AUTH="true"
 AUTH_ENABLED="false"
 AZURE_ENV_NAME="sama-mcp"
-AZURE_FUNCTION_NAME="func-mcp-hk6er2km4y6bi"
+AZURE_FUNCTION_NAME="AZURE-FUNCTION-APP-NAME"
 AZURE_LOCATION="eastus2"
-SERVICE_MCP_DEFAULT_HOSTNAME="func-mcp-hk6er2km4y6bi.azurewebsites.net"
+SERVICE_MCP_DEFAULT_HOSTNAME="AZURE-FUNCTION-APP-NAME.azurewebsites.net"
 ```
 
 **Why:**
@@ -235,8 +235,8 @@ SERVICE_MCP_DEFAULT_HOSTNAME="func-mcp-hk6er2km4y6bi.azurewebsites.net"
 **Solution:**
 1. **Configured Azure Function App CORS:**
    ```bash
-   az functionapp cors add --name func-mcp-hk6er2km4y6bi \
-     --resource-group rg-sama-mcp --allowed-origins "*"
+   az functionapp cors add --name AZURE-FUNCTION-APP-NAME \
+     --resource-group AZURE-RESOURCE-GROUP --allowed-origins "*"
    ```
    This sets `Access-Control-Allow-Origin: *` header at the Azure Function level
 
