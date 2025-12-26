@@ -280,7 +280,6 @@ SAMA Brain will understand natural language aliases:
 | "bitcoin", "btc", "satoshis" | XBTC |
 | "eth", "ethereum" | XETH |
 | "proton", "xpr" | XPR |
-
 | "swap", "cambiar", "intercambiar" | swap action |
 | "prestar", "pedir prestado" | borrow action |
 | "depositar", "meter" | supply action |
