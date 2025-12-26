@@ -7,16 +7,16 @@
 SAMA's intelligence layer powered by specialized MCP (Model Context Protocol) servers that enable natural language interaction with the Proton blockchain ecosystem.
 
 ```
-User: "Swapéame 20 dolaretes de metal por pussy, de a tandas de 5 xmd por día"
+User: "Swapéame 20 dolaretes de metal por proton, de a tandas de 5 xmd por día"
 
 SAMA Brain interprets:
   → Token: XMD (metal/dolaretes)  
-  → Target: PUSSY token
+  → Target: XPR token
   → Amount: 20 XMD total
   → Strategy: DCA 5 XMD per day over 4 days
   
 Calls: mcp_sama_swaps.schedule_dca_swap({
-  from: "XMD", to: "PUSSY", total: 20, 
+  from: "XMD", to: "XPR", total: 20, 
   tranches: 4, interval: "daily"
 })
 ```
@@ -112,7 +112,7 @@ zenpunk-xpr/agentic_dev/
 │               └── format.ts    # Formatting helpers
 │
 ├── servers/
-│   ├── lending/                 # MCP Lending Server (current experiment_01)
+│   ├── lending/                 # MCP Lending Server
 │   │   ├── package.json
 │   │   └── src/
 │   │       ├── index.ts
@@ -144,7 +144,7 @@ zenpunk-xpr/agentic_dev/
 
 ## MCP Server Specifications
 
-### 1. MCP Lending Server (Current: experiment_01)
+### 1. MCP Lending Server
 **Port**: 3001
 **Tools**: 32 tools
 **Capabilities**:
@@ -280,7 +280,7 @@ SAMA Brain will understand natural language aliases:
 | "bitcoin", "btc", "satoshis" | XBTC |
 | "eth", "ethereum" | XETH |
 | "proton", "xpr" | XPR |
-| "pussy", "cat", "gato" | PUSSY token |
+
 | "swap", "cambiar", "intercambiar" | swap action |
 | "prestar", "pedir prestado" | borrow action |
 | "depositar", "meter" | supply action |
@@ -291,10 +291,9 @@ SAMA Brain will understand natural language aliases:
 1. [x] Create lending-adapter.ts with correct oracle mappings
 2. [x] Implement exchange rate calculations
 3. [ ] Extract @sama/core shared library
-4. [ ] Restructure experiment_01 → servers/lending
-5. [ ] Create servers/swaps MCP server
-6. [ ] Implement SAMA Brain intent parsing
-7. [ ] Add transaction signing capabilities
+4. [ ] Create servers/swaps MCP server
+5. [ ] Implement SAMA Brain intent parsing
+6. [ ] Add transaction signing capabilities
 
 ## References
 
