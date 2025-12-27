@@ -91,7 +91,6 @@ This index provides a navigational overview of the complete research structure f
 ### Architecture → Implementation
 | Component | Design Doc | Implementation Artifact |
 |-----------|-----------|------------------------|
-| Blockchain Listener | agentic_pipeline_ontology.md | `/agentic_dev/experiment_01/azure-function/src/listener.ts` |
 | Event Hub | architecture.md | Terraform: `azurerm_eventhub_namespace` |
 | ADX Data Connection | architecture.md | ADX command: `.create data-connection` |
 
