@@ -1,0 +1,33 @@
+{
+  "name": "@sama/core",
+  "version": "1.0.0",
+  "description": "SAMA Protocol Core Library - Shared constants, types, and utilities",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "sama",
+    "proton",
+    "xpr",
+    "defi",
+    "lending",
+    "metalx"
+  ],
+  "author": "SAMA Protocol",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ZEN-PUNK/XPR"
+  }
+}

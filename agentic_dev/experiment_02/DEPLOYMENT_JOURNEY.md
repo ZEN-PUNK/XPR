@@ -9,7 +9,7 @@
 Successfully deployed a Proton blockchain MCP server to Azure Functions in the `sama-mcp` resource group. The journey involved solving CORS issues, pivoting from CLI subprocess execution to direct RPC API calls, and validating with real blockchain queries.
 
 **Final Result:**
-- ✅ Working MCP server at `https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp`
+- ✅ Working MCP server at `https://YOUR-FUNCTION-APP.azurewebsites.net/mcp`
 - ✅ Direct RPC integration (no subprocess overhead)
 - ✅ Tested with 4 accounts (3 successful, 1 expected failure)
 - ✅ Response time: ~200-300ms
@@ -24,8 +24,8 @@ Successfully deployed a Proton blockchain MCP server to Azure Functions in the `
 **Result:** ✅ Success (5 minutes 2 seconds)
 
 **Resources Created:**
-- Resource Group: `rg-sama-mcp`
-- Function App: `func-mcp-hk6er2km4y6bi`
+- Resource Group: `AZURE-RESOURCE-GROUP`
+- Function App: `AZURE-FUNCTION-APP-NAME`
 - Storage: `sthk6er2km4y6bi`
 - App Service Plan: `plan-hk6er2km4y6bi` (FlexConsumption)
 - Application Insights: `appi-hk6er2km4y6bi`
@@ -46,7 +46,7 @@ ANONYMOUS_SERVER_AUTH="true"
 **Symptom:**
 ```
 TypeError: Failed to fetch
-Error sending message to https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
+Error sending message to https://YOUR-FUNCTION-APP.azurewebsites.net/mcp
 ```
 
 **Analysis:**
@@ -57,14 +57,14 @@ Error sending message to https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
 **Solution:**
 ```bash
 az functionapp cors add \
-  --name func-mcp-hk6er2km4y6bi \
-  --resource-group rg-sama-mcp \
+  --name AZURE-FUNCTION-APP-NAME \
+  --resource-group AZURE-RESOURCE-GROUP \
   --allowed-origins "*"
 ```
 
 **Verification:**
 ```bash
-curl -v -X OPTIONS https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp \
+curl -v -X OPTIONS https://YOUR-FUNCTION-APP.azurewebsites.net/mcp \
   -H "Origin: vscode-file://vscode-app" \
   -H "Access-Control-Request-Method: POST"
 ```
@@ -122,7 +122,7 @@ AttributeError: 'function' object has no attribute 'add_middleware'
 
 **Test Command:**
 ```bash
-curl -N -X POST https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp \
+curl -N -X POST https://YOUR-FUNCTION-APP.azurewebsites.net/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{
@@ -658,9 +658,9 @@ print(dir(mcp))
 ## 🔗 Resources
 
 ### Deployed Endpoints
-- **MCP Server:** https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
-- **Function App:** https://func-mcp-hk6er2km4y6bi.azurewebsites.net/
-- **Azure Portal:** [Resource Group rg-sama-mcp](https://portal.azure.com/#resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/rg-sama-mcp)
+- **MCP Server:** https://YOUR-FUNCTION-APP.azurewebsites.net/mcp
+- **Function App:** https://YOUR-FUNCTION-APP.azurewebsites.net/
+- **Azure Portal:** [Resource Group AZURE-RESOURCE-GROUP](https://portal.azure.com/#resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/AZURE-RESOURCE-GROUP)
 
 ### Documentation
 - [agent.md](./agent.md) - Architecture and strategy
@@ -679,7 +679,7 @@ print(dir(mcp))
 ## ✅ Success Metrics
 
 **Deployment:**
-- ✅ Resource group: `rg-sama-mcp` created
+- ✅ Resource group: `AZURE-RESOURCE-GROUP` created
 - ✅ Function app running and accessible
 - ✅ CORS configured correctly
 - ✅ Anonymous auth working

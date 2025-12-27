@@ -4,7 +4,7 @@
 
 **Environment:** sama-mcp  
 **Region:** East US 2  
-**Resource Group:** rg-sama-mcp  
+**Resource Group:** AZURE-RESOURCE-GROUP  
 **Deployment Date:** December 25, 2024  
 **Last Updated:** December 25, 2024 16:00 UTC  
 **Status:** ✅ Active (Production)
@@ -16,7 +16,7 @@
 
 ### MCP Server Endpoint
 ```
-https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
+https://YOUR-FUNCTION-APP.azurewebsites.net/mcp
 ```
 
 ### Proton RPC Endpoints (Automatic Failover)
@@ -29,7 +29,7 @@ https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
 
 ### Function App
 ```
-https://func-mcp-hk6er2km4y6bi.azurewebsites.net/
+https://YOUR-FUNCTION-APP.azurewebsites.net/
 ```
 
 ---
@@ -38,8 +38,8 @@ https://func-mcp-hk6er2km4y6bi.azurewebsites.net/
 
 | Resource Type | Resource Name | Purpose |
 |--------------|---------------|---------|
-| Resource Group | `rg-sama-mcp` | Container for all resources |
-| Function App | `func-mcp-hk6er2km4y6bi` | Hosts the MCP server |
+| Resource Group | `AZURE-RESOURCE-GROUP` | Container for all resources |
+| Function App | `AZURE-FUNCTION-APP-NAME` | Hosts the MCP server |
 | Storage Account | `sthk6er2km4y6bi` | Function app storage |
 | App Service Plan | `plan-hk6er2km4y6bi` | Flex Consumption SKU |
 | Application Insights | `appi-hk6er2km4y6bi` | Monitoring & telemetry |
@@ -56,10 +56,10 @@ https://func-mcp-hk6er2km4y6bi.azurewebsites.net/
 ANONYMOUS_SERVER_AUTH="true"
 AUTH_ENABLED="false"
 AZURE_ENV_NAME="sama-mcp"
-AZURE_FUNCTION_NAME="func-mcp-hk6er2km4y6bi"
+AZURE_FUNCTION_NAME="AZURE-FUNCTION-APP-NAME"
 AZURE_LOCATION="eastus2"
 AZURE_SUBSCRIPTION_ID="<YOUR_SUBSCRIPTION_ID>"
-SERVICE_MCP_DEFAULT_HOSTNAME="func-mcp-hk6er2km4y6bi.azurewebsites.net"
+SERVICE_MCP_DEFAULT_HOSTNAME="AZURE-FUNCTION-APP-NAME.azurewebsites.net"
 ```
 
 ### Authentication
@@ -208,8 +208,8 @@ ApplicationId: f0579508-8b5b-477f-8a76-06865c35065b
 ```
 
 ### Azure Portal Links
-- **Resource Group:** [rg-sama-mcp](https://portal.azure.com/#resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/rg-sama-mcp)
-- **Function App:** [func-mcp-hk6er2km4y6bi](https://portal.azure.com/#resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/rg-sama-mcp/providers/Microsoft.Web/sites/func-mcp-hk6er2km4y6bi)
+- **Resource Group:** [AZURE-RESOURCE-GROUP](https://portal.azure.com/#resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/AZURE-RESOURCE-GROUP)
+- **Function App:** [AZURE-FUNCTION-APP-NAME](https://portal.azure.com/#resource/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/AZURE-RESOURCE-GROUP/providers/Microsoft.Web/sites/AZURE-FUNCTION-APP-NAME)
 - **Application Insights:** Monitor logs, metrics, and performance
 
 ---
@@ -218,7 +218,7 @@ ApplicationId: f0579508-8b5b-477f-8a76-06865c35065b
 
 ### Test MCP Endpoint (Basic)
 ```bash
-curl https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp
+curl https://YOUR-FUNCTION-APP.azurewebsites.net/mcp
 ```
 
 Expected: Error about content type (server is running)
@@ -229,7 +229,7 @@ Use the MCP Inspector or configure your MCP client:
 {
   "mcpServers": {
     "xpr-blockchain": {
-      "url": "https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp"
+      "url": "https://YOUR-FUNCTION-APP.azurewebsites.net/mcp"
     }
   }
 }
@@ -270,8 +270,8 @@ Use the MCP Inspector or configure your MCP client:
 
 ## ⚡ Quick Reference
 
-**Resource Group:** `rg-sama-mcp`  
-**MCP Endpoint:** `https://func-mcp-hk6er2km4y6bi.azurewebsites.net/mcp`  
+**Resource Group:** `AZURE-RESOURCE-GROUP`  
+**MCP Endpoint:** `https://YOUR-FUNCTION-APP.azurewebsites.net/mcp`  
 **Region:** East US 2  
 **Auth:** Anonymous (enabled)  
 **Tools:** get_account, get_user_info  

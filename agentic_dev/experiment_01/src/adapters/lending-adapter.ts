@@ -3,6 +3,13 @@
  * 
  * Fetches data from MetalX Lending Protocol on Proton blockchain
  * 
+ * SINGLE SOURCE OF TRUTH: /home/misha/SAMA_portal/ai-agent/config.py
+ * This file mirrors the AMAS bot configuration. Keep in sync!
+ * 
+ * Reference implementations:
+ * - Exchange rates: backend/src/services/amas-scanner.service.ts
+ * - Rescue calculations: backend/src/routes/rescue-market.routes.ts
+ * 
  * Key tables:
  * - markets: market config (collateral_factor, borrow_index, etc)
  * - shares: user collateral positions (L-tokens)
@@ -13,27 +20,43 @@ const PROTON_API = 'https://proton.eosusa.io';
 const LENDING_CONTRACT = 'lending.loan';
 const ORACLE_CONTRACT = 'oracles';
 
-// Oracle feed index to symbol mapping
+/**
+ * ORACLE FEED INDEX MAPPING
+ * Source: SAMA_portal/ai-agent/config.py::ORACLE_FEED_INDEXES
+ * Last synced: 2024-12-26
+ * 
+ * These are read from lending.loan::markets.oracle_feed_index on-chain
+ * Format: feed_index => [symbol, precision]
+ */
 const ORACLE_FEED_MAP: Record<number, [string, number]> = {
-  4: ['XBTC', 8],
-  6: ['XPR', 4],
-  7: ['XMT', 6],
-  11: ['XETH', 8],
-  13: ['XXRP', 6],
-  16: ['XLTC', 8],
-  17: ['XDOGE', 6],
-  18: ['XXLM', 6],
-  19: ['XHBAR', 6],
-  20: ['XSOL', 6],
-  21: ['XMD', 6],
-  22: ['XADA', 6],
-  23: ['XUSDT', 6],
-  24: ['XUSDC', 6],
+  3: ['XPR', 4],      // XPR/USD
+  4: ['XBTC', 8],     // BTC/USD
+  5: ['XUSDC', 6],    // USDC/USD (stablecoin)
+  6: ['XMT', 6],      // MTL/USD  
+  7: ['XETH', 8],     // ETH/USD
+  8: ['XDOGE', 6],    // DOGE/USD
+  9: ['XUSDT', 6],    // USDT/USD (stablecoin)
+  10: ['XUST', 6],    // UST/USD (deprecated)
+  11: ['XLUNA', 6],   // LUNA/USD (deprecated)
+  12: ['XMD', 6],     // XMD/USD (stablecoin)
+  16: ['XLTC', 8],    // LTC/USD
+  18: ['XXRP', 6],    // XRP/USD
+  19: ['XSOL', 6],    // SOL/USD
+  21: ['XHBAR', 6],   // HBAR/USD
+  22: ['XADA', 6],    // ADA/USD
+  23: ['XXLM', 6],    // XLM/USD
 };
 
 // Simple cache
 let pricesCache: Record<string, number> | null = null;
 let marketsCache: Map<string, any> | null = null;
+let exchangeRatesCache: Record<string, number> | null = null;
+
+// Token contracts
+const SHARES_CONTRACT = 'shares.loan';
+const XTOKENS_CONTRACT = 'xtokens';
+const EOSIO_TOKEN = 'eosio.token';
+const XMD_TOKEN = 'xmd.token';
 
 /**
  * Fetch table rows from Proton blockchain
@@ -97,18 +120,93 @@ async function loadMarkets(): Promise<Map<string, any>> {
   for (const m of rows) {
     const lSymbol = (m.share_symbol?.sym || '').split(',')[1] || '';
     const underlying = (m.underlying_symbol?.sym || '').split(',')[1] || '';
+    const underlyingContract = m.underlying_symbol?.contract || '';
+    
+    // Parse total_variable_borrows and total_reserves
+    const totalBorrowsQty = parseFloat((m.total_variable_borrows?.quantity || '0').split(' ')[0]) || 0;
+    const totalReservesQty = parseFloat((m.total_reserves?.quantity || '0').split(' ')[0]) || 0;
     
     markets.set(lSymbol, {
       l_symbol: lSymbol,
       underlying: underlying,
+      underlying_contract: underlyingContract,
       collateral_factor: parseFloat(m.collateral_factor) || 0,
       borrow_index: parseFloat(m.borrow_index) || 1,
       oracle_feed_index: m.oracle_feed_index,
+      total_borrows: totalBorrowsQty,
+      total_reserves: totalReservesQty,
     });
   }
   
   marketsCache = markets;
   return markets;
+}
+
+/**
+ * Load exchange rates for L-tokens to underlying conversion
+ * 
+ * FORMULA (from amas-scanner.service.ts line ~345):
+ *   exchangeRate = (underlyingBalance + totalBorrows - reserves) / totalShares
+ * 
+ * This converts L-tokens (shares) to underlying token amounts.
+ * Example: If exchangeRate = 1.05, then 100 LBTC = 105 XBTC
+ */
+async function loadExchangeRates(): Promise<Record<string, number>> {
+  if (exchangeRatesCache) return exchangeRatesCache;
+  
+  const markets = await loadMarkets();
+  const rates: Record<string, number> = {};
+  
+  // Get L-token total supplies from shares.loan stat tables
+  const lTokenSupplies: Record<string, number> = {};
+  for (const [lSymbol] of markets) {
+    try {
+      const statRows = await getTable(SHARES_CONTRACT, 'stat', lSymbol, 1);
+      if (statRows.length > 0) {
+        const supply = parseFloat((statRows[0].supply || '0').split(' ')[0]) || 0;
+        lTokenSupplies[lSymbol] = supply;
+      }
+    } catch {
+      lTokenSupplies[lSymbol] = 0;
+    }
+  }
+  
+  // Get underlying token balances (cash) held by lending.loan
+  const cashBalances: Record<string, number> = {};
+  
+  // Query each token contract for lending.loan balance
+  const tokenContracts = [XTOKENS_CONTRACT, EOSIO_TOKEN, XMD_TOKEN];
+  for (const contract of tokenContracts) {
+    try {
+      const balanceRows = await getTable(contract, 'accounts', LENDING_CONTRACT, 50);
+      for (const row of balanceRows) {
+        const [amount, symbol] = (row.balance || '0 UNKNOWN').split(' ');
+        cashBalances[symbol] = parseFloat(amount) || 0;
+      }
+    } catch {
+      // Ignore errors
+    }
+  }
+  
+  // Calculate exchange rate for each market
+  for (const [lSymbol, market] of markets) {
+    const underlying = market.underlying;
+    const totalCash = cashBalances[underlying] || 0;
+    const totalBorrows = market.total_borrows || 0;
+    const totalReserves = market.total_reserves || 0;
+    const totalLTokens = lTokenSupplies[lSymbol] || 1;
+    
+    // Exchange Rate = (cash + borrows - reserves) / lTokens
+    // If no L-tokens exist, rate is 1:1
+    if (totalLTokens > 0) {
+      rates[lSymbol] = (totalCash + totalBorrows - totalReserves) / totalLTokens;
+    } else {
+      rates[lSymbol] = 1.0;
+    }
+  }
+  
+  exchangeRatesCache = rates;
+  return rates;
 }
 
 /**
@@ -173,6 +271,7 @@ export async function getOraclePrices(symbols?: string[]): Promise<any> {
 export async function getLiquidatablePositions(minProfitUsd: number = 0.5): Promise<any> {
   const prices = await loadPrices();
   const markets = await loadMarkets();
+  const exchangeRates = await loadExchangeRates();
   
   // Fetch borrows and shares
   const [borrowsRows, sharesRows] = await Promise.all([
@@ -201,6 +300,7 @@ export async function getLiquidatablePositions(minProfitUsd: number = 0.5): Prom
     const shareTokens = sharesMap.get(account) || [];
     
     // Calculate collateral USD (from shares)
+    // Collateral = shares * exchangeRate * price
     let collateralUsd = 0;
     let effectiveCollateralUsd = 0;
     const collaterals: any[] = [];
@@ -216,9 +316,13 @@ export async function getLiquidatablePositions(minProfitUsd: number = 0.5): Prom
       const market = markets.get(lSymbol);
       if (!market) continue;
       
-      const amount = shares / Math.pow(10, precision);
+      // Convert shares to underlying using exchange rate
+      const sharesAmount = shares / Math.pow(10, precision);
+      const exchangeRate = exchangeRates[lSymbol] || 1.0;
+      const underlyingAmount = sharesAmount * exchangeRate;
+      
       const price = prices[market.underlying] || 0;
-      const valueUsd = amount * price;
+      const valueUsd = underlyingAmount * price;
       const effectiveValue = valueUsd * market.collateral_factor;
       
       collateralUsd += valueUsd;
@@ -227,7 +331,7 @@ export async function getLiquidatablePositions(minProfitUsd: number = 0.5): Prom
       collaterals.push({
         l_symbol: lSymbol,
         underlying: market.underlying,
-        amount: Math.round(amount * 10000) / 10000,
+        amount: Math.round(underlyingAmount * 10000) / 10000,
         value_usd: Math.round(valueUsd * 100) / 100,
       });
     }
@@ -313,6 +417,7 @@ export async function getLiquidatablePositions(minProfitUsd: number = 0.5): Prom
 export async function getAtRiskPositions(hfThreshold: number = 1.1): Promise<any> {
   const prices = await loadPrices();
   const markets = await loadMarkets();
+  const exchangeRates = await loadExchangeRates();
   
   const [borrowsRows, sharesRows] = await Promise.all([
     getTable(LENDING_CONTRACT, 'borrows', LENDING_CONTRACT, 500),
@@ -348,9 +453,13 @@ export async function getAtRiskPositions(hfThreshold: number = 1.1): Promise<any
       const market = markets.get(lSymbol);
       if (!market) continue;
       
-      const amount = shares / Math.pow(10, precision);
+      // Apply exchange rate
+      const sharesAmount = shares / Math.pow(10, precision);
+      const exchangeRate = exchangeRates[lSymbol] || 1.0;
+      const underlyingAmount = sharesAmount * exchangeRate;
+      
       const price = prices[market.underlying] || 0;
-      effectiveCollateralUsd += amount * price * market.collateral_factor;
+      effectiveCollateralUsd += underlyingAmount * price * market.collateral_factor;
     }
     
     let debtUsd = 0;
@@ -401,6 +510,7 @@ export async function getAtRiskPositions(hfThreshold: number = 1.1): Promise<any
 export async function getLendingPosition(accountName: string): Promise<any> {
   const prices = await loadPrices();
   const markets = await loadMarkets();
+  const exchangeRates = await loadExchangeRates();
   
   const [borrowsRows, sharesRows] = await Promise.all([
     getTable(LENDING_CONTRACT, 'borrows', LENDING_CONTRACT, 1000),
@@ -421,7 +531,7 @@ export async function getLendingPosition(accountName: string): Promise<any> {
   const borrowTokens = borrowRow?.tokens || [];
   const shareTokens = shareRow?.tokens || [];
   
-  // Calculate collaterals
+  // Calculate collaterals with exchange rate
   const collaterals: any[] = [];
   let totalCollateralUsd = 0;
   let effectiveCollateralUsd = 0;
@@ -436,9 +546,13 @@ export async function getLendingPosition(accountName: string): Promise<any> {
     const market = markets.get(lSymbol);
     if (!market) continue;
     
-    const amount = shares / Math.pow(10, precision);
+    // Convert shares to underlying amount using exchange rate
+    const sharesAmount = shares / Math.pow(10, precision);
+    const exchangeRate = exchangeRates[lSymbol] || 1.0;
+    const underlyingAmount = sharesAmount * exchangeRate;
+    
     const price = prices[market.underlying] || 0;
-    const valueUsd = amount * price;
+    const valueUsd = underlyingAmount * price;
     
     totalCollateralUsd += valueUsd;
     effectiveCollateralUsd += valueUsd * market.collateral_factor;
@@ -446,7 +560,7 @@ export async function getLendingPosition(accountName: string): Promise<any> {
     collaterals.push({
       l_symbol: lSymbol,
       underlying: market.underlying,
-      amount: Math.round(amount * 10000) / 10000,
+      amount: Math.round(underlyingAmount * 10000) / 10000,
       price_usd: price,
       value_usd: Math.round(valueUsd * 100) / 100,
       collateral_factor: market.collateral_factor,

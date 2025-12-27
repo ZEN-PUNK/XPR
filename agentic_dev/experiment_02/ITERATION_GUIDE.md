@@ -156,7 +156,7 @@ azd deploy --no-prompt
 # Expected output:
 # Deploying services (azd deploy)
 #   (✓) Done: Deploying service mcp
-#   - Endpoint: https://func-mcp-hk6er2km4y6bi.azurewebsites.net/
+#   - Endpoint: https://YOUR-FUNCTION-APP.azurewebsites.net/
 # SUCCESS: Your application was deployed to Azure in X minutes Y seconds.
 ```
 
@@ -164,8 +164,8 @@ azd deploy --no-prompt
 ```bash
 # Check function app is running
 az functionapp show \
-  --name func-mcp-hk6er2km4y6bi \
-  --resource-group rg-sama-mcp \
+  --name AZURE-FUNCTION-APP-NAME \
+  --resource-group AZURE-RESOURCE-GROUP \
   --query state
 
 # Expected: "Running"
@@ -435,7 +435,7 @@ $ azd deploy --no-prompt
 
 Deploying services (azd deploy)
   (✓) Done: Deploying service mcp
-  - Endpoint: https://func-mcp-hk6er2km4y6bi.azurewebsites.net/
+  - Endpoint: https://YOUR-FUNCTION-APP.azurewebsites.net/
 SUCCESS: Your application was deployed to Azure in 1 minute 12 seconds.
 ```
 
