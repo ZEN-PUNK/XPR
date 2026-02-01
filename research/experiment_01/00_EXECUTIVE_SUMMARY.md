@@ -3,7 +3,7 @@
 **Research Title:** Scalable Real-Time Blockchain Event Streaming to Cloud Analytics: An Empirical Study of Azure Event Hub and Data Explorer
 
 **Date:** December 27, 2025  
-**Authors:** ZEN-PUNK Research Team  
+**Authors:** DR QUANTUM :]
 **Status:** Production-Validated Implementation
 
 ---
