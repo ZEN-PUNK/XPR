@@ -85,7 +85,7 @@ For agents running in any environment:
 
 ```bash
 # Download script
-curl -o create_account.sh https://raw.githubusercontent.com/ZEN-PUNK/XPR/feat/sama-integration/Antler/agentic_dev/experiment_01/create_account_automated.sh
+curl -o create_account.sh https://raw.githubusercontent.com/ZEN-PUNK/XPR/main/Antler/agentic_dev/experiment_01/create_account_automated.sh
 
 # Make executable
 chmod +x create_account.sh
