@@ -1,0 +1,19 @@
+# Security: Never commit private keys
+.keys_*.json
+*_private_key.txt
+*.pem
+*.key
+
+# Environment variables with secrets
+.env
+.env.*
+.env.local
+.env.*.local
+
+# Account credentials
+account_credentials.json
+wallet.json
+
+# Backup files
+*.backup
+*.bak
