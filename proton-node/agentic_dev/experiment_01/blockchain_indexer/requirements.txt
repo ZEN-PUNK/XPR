@@ -1,0 +1,9 @@
+requests>=2.31.0
+sqlalchemy>=2.0.0
+pyyaml>=6.0.0
+pandas>=2.0.0
+python-dateutil>=2.8.0
+psycopg2-binary>=2.9.0  # for PostgreSQL support
+streamlit>=1.28.0  # for dashboard
+plotly>=5.17.0  # for visualizations
+click>=8.1.0  # for CLI
