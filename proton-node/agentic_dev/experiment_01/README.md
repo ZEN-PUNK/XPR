@@ -2,6 +2,9 @@
 
 **Complete blockchain node setup with automated deployment to Azure VMs**
 
+**Node Type:** Standalone Development Node (Proton v2.0.5)  
+**Purpose:** Local development, testing, and learning - does not sync with mainnet
+
 ---
 
 ## 🚀 Quick Start
@@ -18,10 +21,13 @@ Complete guide for:
 ### 2. **What You Get**
 
 This experiment provides:
-- ✅ **Automated Proton Node Setup** - Deploy testnet nodes on Azure VMs via Docker
-- ✅ **Blockchain Data Indexer** - Stream blockchain data to SQL databases
+- ✅ **Automated Proton Node Setup** - Deploy standalone development nodes on Azure VMs via Docker
+- ✅ **Full RPC API Server** - Complete blockchain query interface for testing and development
+- ✅ **Blockchain Data Indexer** (optional) - Stream blockchain data to SQL databases
 - ✅ **Zero Hardcoded Values** - Fully parametrized with `.env` configuration
-- ✅ **100% Tested** - 5/5 successful deployments, ~5 minute setup time
+- ✅ **100% Tested** - Verified deployment process, ~5 minute setup time
+
+**⚠️ Note:** This deploys **Proton v2.0.5 (2020)** as a standalone node. It does NOT sync with the current Proton mainnet (which requires v5.x). Perfect for development and learning purposes.
 
 ---
 

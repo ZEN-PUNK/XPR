@@ -3,6 +3,30 @@
 ## Overview
 This guide provides a deterministic, step-by-step process for an AI agent to set up a Proton blockchain node on an Azure Ubuntu VM using SSH.
 
+**📌 NODE TYPE: Standalone Development Node**
+
+This setup deploys **Proton v2.0.5** as a standalone RPC server for development and testing purposes.
+
+**What This Node Provides:**
+- ✅ Full RPC API access for blockchain queries (`/v1/chain/*` endpoints)
+- ✅ Ideal for smart contract development and testing
+- ✅ Runs independently with custom genesis block
+- ✅ No external network dependencies
+
+**Important Limitations:**
+- ⚠️ **Does NOT sync with Proton mainnet** (mainnet requires v5.x, released 2024)
+- ⚠️ **Does NOT produce blocks** (runs as read-only RPC server)
+- ⚠️ **Historical version** (v2.0.5 from 2020, suitable for learning/development only)
+- ⚠️ Not recommended for production mainnet applications
+
+**Use Cases:**
+- Local blockchain development and testing
+- Learning Proton blockchain RPC APIs
+- Smart contract prototyping
+- Offline development environment
+
+---
+
 ## ⚡ QUICK WIN: Docker Ubuntu 18.04 Solution (RECOMMENDED)
 
 **This is the ONLY method that works reliably** - tested and working in under 5 minutes.

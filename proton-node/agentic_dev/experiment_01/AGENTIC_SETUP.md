@@ -3,7 +3,9 @@
 **Purpose:** Complete AI agent-friendly setup guide for deploying Proton blockchain nodes  
 **Target:** Autonomous agents, developers, and automated systems  
 **Time:** 5-10 minutes (fully automated)  
-**Status:** ✅ Production-ready, tested 5/5 times
+**Status:** ✅ Production-ready, tested and verified
+
+**⚠️ Important:** This deploys a **standalone development node** (Proton v2.0.5) that runs independently without syncing to external networks. Perfect for local development, testing, and learning Proton blockchain concepts.
 
 ---
 
@@ -11,9 +13,21 @@
 
 This experiment provides:
 1. **Automated Proton Node Deployment** on Azure Ubuntu VMs
-2. **Blockchain Data Indexer** for streaming data to SQL databases  
-3. **Complete Documentation** for reproducible setups
-4. **Zero-hardcoded values** - fully parametrized
+2. **Standalone RPC Server** - Full blockchain RPC API for queries and testing
+3. **Blockchain Data Indexer** (optional) for streaming data to SQL databases  
+4. **Complete Documentation** for reproducible setups
+5. **Zero-hardcoded values** - fully parametrized
+
+**What this node does:**
+- ✅ Provides full RPC API access (`/v1/chain/*` endpoints)
+- ✅ Perfect for smart contract testing and development
+- ✅ Runs independently with custom genesis
+- ✅ No external dependencies or peer connections needed
+
+**What this node does NOT do:**
+- ❌ Does not sync with Proton mainnet (requires v5.x)
+- ❌ Does not produce blocks (read-only RPC mode)
+- ❌ Not suitable for production mainnet applications
 
 ---
 

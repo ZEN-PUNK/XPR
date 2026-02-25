@@ -1,5 +1,8 @@
 #!/bin/bash
-# Proton Testnet Node - One-Command Setup
+# Proton Development Node - One-Command Setup  
+# Deploys a standalone Proton v2.0.5 RPC node for development and testing
+# Note: This node runs in standalone mode and does not sync with external networks
+#
 # Usage: ./quick-setup.sh <VM_IP> <SSH_KEY_PATH> [VM_USER]
 #
 # Example: ./quick-setup.sh 20.81.200.166 ~/.ssh/my-key.pem azureuser
@@ -32,7 +35,7 @@ SSH_KEY="$2"
 VM_USER="${3:-azureuser}"
 
 echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}Proton Testnet Node - Automated Setup${NC}"
+echo -e "${GREEN}Proton Development Node - Automated Setup${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
 echo "Configuration:"
@@ -128,8 +131,8 @@ services:
       apt-get install -y wget curl &&
       wget https://github.com/XPRNetwork/core/releases/download/v2.0.5/proton_2.0.5-1-ubuntu-18.04_amd64.deb -O /tmp/proton.deb &&
       apt-get install -y /tmp/proton.deb &&
-      echo Starting Proton testnet node... &&
-      nodeos --data-dir=/root/.local/share/eosio/nodeos/data --config-dir=/root/.local/share/eosio/nodeos/config --http-server-address=0.0.0.0:8888 --p2p-listen-endpoint=0.0.0.0:9876 --p2p-peer-address=testnet.protonchain.com:9876 --p2p-peer-address=testnet.eosusa.io:19876 --plugin=eosio::chain_plugin --plugin=eosio::chain_api_plugin --plugin=eosio::http_plugin --plugin=eosio::net_plugin --plugin=eosio::net_api_plugin --access-control-allow-origin=* --http-validate-host=false --verbose-http-errors --max-clients=25 --contracts-console
+      echo Starting Proton development node - standalone RPC server &&
+      nodeos --data-dir=/root/.local/share/eosio/nodeos/data --config-dir=/root/.local/share/eosio/nodeos/config --http-server-address=0.0.0.0:8888 --p2p-listen-endpoint=0.0.0.0:9876 --plugin=eosio::chain_plugin --plugin=eosio::chain_api_plugin --plugin=eosio::http_plugin --plugin=eosio::net_plugin --plugin=eosio::net_api_plugin --access-control-allow-origin=* --http-validate-host=false --verbose-http-errors --max-clients=25 --contracts-console
       "
 EOF
 ' || {
@@ -139,7 +142,7 @@ EOF
 echo -e "${GREEN}✓ Configuration created${NC}"
 
 # Start the node
-echo -e "${YELLOW}[7/8] Starting Proton testnet node...${NC}"
+echo -e "${YELLOW}[7/8] Starting Proton development node...${NC}"
 ssh -i "$SSH_KEY" "$VM_USER@$VM_IP" '
     cd ~/proton-node &&
     sudo rm -rf data/* 2>/dev/null || true &&
@@ -183,6 +186,10 @@ if [ "$HTTP_CODE" = "200" ]; then
     echo -e "${GREEN}========================================${NC}"
     echo -e "${GREEN}✅ SETUP SUCCESSFUL!${NC}"
     echo -e "${GREEN}========================================${NC}"
+    echo ""
+    echo "Node Type: Standalone Development Node (Proton v2.0.5)"
+    echo "Note: This node runs independently and does not sync with external networks."
+    echo "      Perfect for local development, testing, and learning."
     echo ""
     echo "Node Information:"
     echo "  Version:      $SERVER_VERSION"
