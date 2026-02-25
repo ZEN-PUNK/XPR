@@ -3,27 +3,30 @@
 ## Overview
 This guide provides a deterministic, step-by-step process for an AI agent to set up a Proton blockchain node on an Azure Ubuntu VM using SSH.
 
-**📌 NODE TYPE: Standalone Development Node**
+**📌 NODE TYPE: Standalone Block Producer**
 
-This setup deploys **Proton v2.0.5** as a standalone RPC server for development and testing purposes.
+This setup deploys **Proton v2.0.5** as a standalone block-producing node for development and testing purposes.
 
 **What This Node Provides:**
-- ✅ Full RPC API access for blockchain queries (`/v1/chain/*` endpoints)
-- ✅ Ideal for smart contract development and testing
-- ✅ Runs independently with custom genesis block
+- ✅ **Live block production** - Generates new blocks every 0.5 seconds
+- ✅ Full RPC API access for blockchain queries and transactions (`/v1/chain/*` endpoints)
+- ✅ Ideal for smart contract deployment and testing
+- ✅ Runs independently with custom genesis block and producer keys
 - ✅ No external network dependencies
 
 **Important Limitations:**
 - ⚠️ **Does NOT sync with Proton mainnet** (mainnet requires v5.x, released 2024)
-- ⚠️ **Does NOT produce blocks** (runs as read-only RPC server)
+- ⚠️ **Produces blocks independently** (not connected to any public network)
 - ⚠️ **Historical version** (v2.0.5 from 2020, suitable for learning/development only)
+- ⚠️ **Local blockchain only** - blocks produced are specific to this node instance
 - ⚠️ Not recommended for production mainnet applications
 
 **Use Cases:**
-- Local blockchain development and testing
-- Learning Proton blockchain RPC APIs
-- Smart contract prototyping
-- Offline development environment
+- Local blockchain development with live block production
+- Smart contract deployment and testing
+- Learning Proton blockchain block production
+- Transaction testing in isolated environment
+- Offline development without mainnet dependencies
 
 ---
 
@@ -68,16 +71,27 @@ services:
     volumes:
       - ./data:/root/.local/share/eosio/nodeos/data
       - ./config:/root/.local/share/eosio/nodeos/config
+      - ./genesis.json:/root/genesis.json:ro
     command: >
       /bin/bash -c "
       apt-get update &&
       apt-get install -y wget curl &&
       wget https://github.com/XPRNetwork/core/releases/download/v2.0.5/proton_2.0.5-1-ubuntu-18.04_amd64.deb -O /tmp/proton.deb &&
       apt-get install -y /tmp/proton.deb &&
-      echo Starting Proton testnet node... &&
-      nodeos --data-dir=/root/.local/share/eosio/nodeos/data --config-dir=/root/.local/share/eosio/nodeos/config --http-server-address=0.0.0.0:8888 --p2p-listen-endpoint=0.0.0.0:9876 --p2p-peer-address=testnet.protonchain.com:9876 --p2p-peer-address=testnet.eosusa.io:19876 --plugin=eosio::chain_plugin --plugin=eosio::chain_api_plugin --plugin=eosio::http_plugin --plugin=eosio::net_plugin --plugin=eosio::net_api_plugin --access-control-allow-origin=* --http-validate-host=false --verbose-http-errors --max-clients=25 --contracts-console
+      echo Starting Proton standalone block producer... &&
+      nodeos --data-dir=/root/.local/share/eosio/nodeos/data --config-dir=/root/.local/share/eosio/nodeos/config --genesis-json=/root/genesis.json --http-server-address=0.0.0.0:8888 --p2p-listen-endpoint=0.0.0.0:9876 --producer-name=eosio --signature-provider=<PUBLIC_KEY>=KEY:<PRIVATE_KEY> --enable-stale-production --plugin=eosio::chain_plugin --plugin=eosio::chain_api_plugin --plugin=eosio::http_plugin --plugin=eosio::producer_plugin --plugin=eosio::producer_api_plugin --access-control-allow-origin=* --http-validate-host=false --verbose-http-errors --max-clients=25 --contracts-console
       "
 ```
+
+**Key Configuration Changes for Block Production:**
+- ✅ Added `genesis.json` volume mount for custom genesis with producer key
+- ✅ `--genesis-json=/root/genesis.json` - Use custom genesis configuration
+- ✅ `--producer-name=eosio` - Set block producer name
+- ✅ `--signature-provider=<PUBLIC_KEY>=KEY:<PRIVATE_KEY>` - Producer signing key
+- ✅ `--enable-stale-production` - Allow production without network peers
+- ✅ `--plugin=eosio::producer_plugin` - Enable block production
+- ✅ `--plugin=eosio::producer_api_plugin` - Enable producer API endpoints
+- ✅ Removed `--p2p-peer-address` - No external peers needed
 
 ### Complete Setup Commands (Copy-Paste Ready)
 ```bash

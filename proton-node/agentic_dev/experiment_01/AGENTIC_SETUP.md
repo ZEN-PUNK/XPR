@@ -5,28 +5,30 @@
 **Time:** 5-10 minutes (fully automated)  
 **Status:** ✅ Production-ready, tested and verified
 
-**⚠️ Important:** This deploys a **standalone development node** (Proton v2.0.5) that runs independently without syncing to external networks. Perfect for local development, testing, and learning Proton blockchain concepts.
+**⚠️ Important:** This deploys a **standalone block producer** (Proton v2.0.5) that produces blocks independently without syncing to external networks. Perfect for local development, testing, and learning Proton blockchain concepts.
 
 ---
 
 ## 📋 Quick Overview
 
 This experiment provides:
-1. **Automated Proton Node Deployment** on Azure Ubuntu VMs
-2. **Standalone RPC Server** - Full blockchain RPC API for queries and testing
-3. **Blockchain Data Indexer** (optional) for streaming data to SQL databases  
-4. **Complete Documentation** for reproducible setups
-5. **Zero-hardcoded values** - fully parametrized
+1. **Automated Proton Block Producer** on Azure Ubuntu VMs
+2. **Live Block Production** - Node generates new blocks every 0.5 seconds
+3. **Full RPC Server** - Complete blockchain RPC API for queries and transactions
+4. **Blockchain Data Indexer** (optional) for streaming data to SQL databases  
+5. **Complete Documentation** for reproducible setups
+6. **Zero-hardcoded values** - fully parametrized
 
 **What this node does:**
+- ✅ Produces new blocks continuously (block producer mode)
 - ✅ Provides full RPC API access (`/v1/chain/*` endpoints)
-- ✅ Perfect for smart contract testing and development
-- ✅ Runs independently with custom genesis
+- ✅ Perfect for smart contract deployment and testing
+- ✅ Runs independently with custom genesis and producer keys
 - ✅ No external dependencies or peer connections needed
 
 **What this node does NOT do:**
 - ❌ Does not sync with Proton mainnet (requires v5.x)
-- ❌ Does not produce blocks (read-only RPC mode)
+- ❌ Not connected to public Proton network
 - ❌ Not suitable for production mainnet applications
 
 ---
