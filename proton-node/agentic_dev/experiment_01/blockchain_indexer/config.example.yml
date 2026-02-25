@@ -1,0 +1,29 @@
+node:
+  # Options:
+  # - Public mainnet: "https://proton.greymass.com"
+  # - Your Azure VM: "http://{YOUR_VM_IP}:8888" (replace with actual IP)
+  # - Local node: "http://localhost:8888"
+  rpc_url: "http://localhost:8888"
+  timeout: 10
+  
+database:
+  type: "sqlite"  # or "postgresql"
+  path: "data/blockchain.db"
+  # PostgreSQL config (uncomment if using PostgreSQL):
+  # host: "localhost"
+  # port: 5432
+  # database: "proton"
+  # user: "proton"
+  # password: "password"
+  
+sync:
+  batch_size: 100  # blocks per batch
+  checkpoint_interval: 10  # save state every N blocks
+  max_retries: 3
+  retry_delay: 5  # seconds
+  poll_interval: 1  # seconds between checks for new blocks
+  
+logging:
+  level: "INFO"
+  file: "data/indexer.log"
+  format: "[%(asctime)s] %(levelname)s: %(message)s"

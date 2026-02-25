@@ -1,0 +1,29 @@
+node:
+  # Using public Proton mainnet endpoint for testing
+  # For your Azure VM testnet: http://{YOUR_VM_IP}:8888
+  # Update with your VM IP from .env file (see parent directory)
+  rpc_url: "https://proton.greymass.com"
+  timeout: 10
+  
+database:
+  type: "sqlite"  # or "postgresql"
+  path: "data/blockchain.db"
+  # PostgreSQL config (uncomment if using PostgreSQL):
+  # host: "localhost"
+  # port: 5432
+  # database: "proton"
+  # user: "proton"
+  # password: "password"
+  
+sync:
+  start_block: 1           # Default start block if not specified
+  batch_size: 100          # blocks per batch
+  checkpoint_interval: 10  # save state every N blocks
+  max_retries: 3
+  retry_delay: 5  # seconds
+  poll_interval: 1  # seconds between checks for new blocks
+  
+logging:
+  level: "INFO"
+  file: "data/indexer.log"
+  format: "[%(asctime)s] %(levelname)s: %(message)s"
