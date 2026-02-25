@@ -1,0 +1,46 @@
+# Sensitive files - never commit
+.env
+*.pem
+*.key
+.ssh/
+.keys/
+
+# Private keys and credentials
+*_privkey.txt
+*_pubkey.txt
+genesis.json
+producer_keys/
+
+# Emulation data
+emulation/data/
+emulation/config/
+emulation/*.log
+
+# Test outputs
+tests/logs/
+tests/outputs/
+*.test.log
+
+# Node data directories
+node-*/
+data/
+config/
+
+# Azure CLI outputs
+*.json.tmp
+deployment_output.json
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
